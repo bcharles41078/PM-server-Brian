@@ -23,25 +23,25 @@ const ProjectsService = {
               'date_created', usr.date_created,
               'date_modified', usr.date_modified
             )
-          ) AS "author"`
+          ) AS "author"` 
         ),
       )
       .leftJoin(
-        'project_types AS type',
-        'type.id',
-        'prj.id',
+        'project_lists AS type',
+        'type.list_id',
+        'prj.detail_id',
       )
       .leftJoin(
         'project_users AS usr',
-        'prj.author_id',
+        'prj.user_id',
         'usr.id',
       )
-      .groupBy('type.id', 'usr.id')
+      .groupBy('type.list_id', 'usr.id', 'prj.detail_id')
   },
 
   getById(db, id) {
-    return typesService.getAllTypes(db)
-      .where('type.id', id)
+    return ProjectsService.getAllTypes(db)
+      .where('prj.detail_id', id)
       .first()
   },
 
@@ -81,7 +81,7 @@ const ProjectsService = {
       .groupBy('proj.list_id', 'usr.id')
   },
 
-  serializetypeicle(proj) {
+  serializeProjects(proj) {
     const { author } = proj
     return {
       id: proj.detail_id,
@@ -89,9 +89,8 @@ const ProjectsService = {
       project_description: xss(proj.project_description),
       due_date: xss(proj.due_date),
       date_created: new Date(proj.date_created),
-      number_of_comments: Number(typeicle.number_of_comments) || 0,
       author: {
-        id: author.id,
+        id: author.user_id,
         user_name: author.user_name,
         full_name: author.full_name,
         nickname: author.nickname,
@@ -101,22 +100,22 @@ const ProjectsService = {
     }
   },
 
-  serializetypeicleComment(type) {
-    const { user } = type
-    return {
-      id: type.list_id,
-      title: type.title,
-      date_created: new Date(comment.date_created),
-      user: {
-        id: user.id,
-        user_name: user.user_name,
-        full_name: user.full_name,
-        nickname: user.nickname,
-        date_created: new Date(user.date_created),
-        date_modified: new Date(user.date_modified) || null
-      },
-    }
-  },
+//   serializeTypes(type) {
+//     const { user } = type
+//     return {
+//       id: type.list_id,
+//       title: type.title,
+//       date_created: new Date(comment.date_created),
+//       user: {
+//         id: user.id,
+//         user_name: user.user_name,
+//         full_name: user.full_name,
+//         nickname: user.nickname,
+//         date_created: new Date(user.date_created),
+//         date_modified: new Date(user.date_modified) || null
+//       },
+//     }
+//   },
 }
 
 module.exports = ProjectsService

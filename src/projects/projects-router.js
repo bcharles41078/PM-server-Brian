@@ -1,14 +1,14 @@
 const express = require('express')
-const ProjectService = require('./projects-service')
+const ProjectsService = require('./projects-service')
 
 const ProjectsRouter = express.Router()
 
 ProjectsRouter
   .route('/')
   .get((req, res, next) => {
-    ProjecttAllTypes(req.app.get('db'))
+    ProjectsService.getAllTypes(req.app.get('db'))
       .then(proj => {
-        res.json(proj.map(ProjectrializeProject))
+        res.json(proj.map(ProjectsService.serializeProjects))
       })
       .catch(next)
   })
@@ -17,13 +17,19 @@ ProjectsRouter
   .route('/:detail_id')
   .all(checkProjectExists)
   .get((req, res) => {
-    res.json(ProjectsService.serializeProject(res.title))
+    ProjectsService.getById(
+      req.app.get('db'),
+      req.params.detail_id
+    ) .then( result => {
+      res.json(ProjectsService.serializeProjects(result))
+    })
+    
   })
 
 /* async/await syntax for promises */
 async function checkProjectExists(req, res, next) {
   try {
-    const project = await ProjecttById(
+    const project = await ProjectsService.getById(
       req.app.get('db'),
       req.params.detail_id
     )

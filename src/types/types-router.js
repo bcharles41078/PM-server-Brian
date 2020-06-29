@@ -1,12 +1,20 @@
 const express = require('express')
 const path = require('path')
 const typesService = require('./types-service')
+const { serializeTypes } = require('../projects/projects-service')
 
 const typesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 typesRouter
-  .route('/')
+  .route('/:user_id')
+  .get((req, res, next) => {
+    typesService.getAllTypes(req.app.get('db'), req.params.user_id)
+      .then(types => {
+        res.json(types.map(typesService.serializeTypes))
+      })
+      .catch(next)
+  })
   .post(jsonBodyParser, (req, res, next) => {
     const { title, user_id } = req.body
     const newType = { title, user_id }
@@ -28,6 +36,6 @@ typesRouter
           .json(TypesService.serializeTypes(type))
       })
       .catch(next)
-    })
+  })
 
 module.exports = typesRouter

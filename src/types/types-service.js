@@ -1,6 +1,12 @@
 const xss = require('xss')
 
 const typesService = {
+  getAllTypes(db, user_id) {
+    return db
+      .from('project_lists')
+      .select('*')
+      .where('user_id', user_id)
+  },
   getById(db, id) {
     return db
       .from('project_lists AS type')
@@ -46,19 +52,11 @@ const typesService = {
   },
 
   serializeTypes(type) {
-    const { user } = type
     return {
       id: type.list_id,
       title: xss(type.title),
       date_created: new Date(type.date_created),
-      user: {
-        id: user.id,
-        user_name: user.user_name,
-        full_name: user.full_name,
-        nickname: user.nickname,
-        date_created: new Date(user.date_created),
-        date_modified: new Date(user.date_modified) || null
-      },
+      user_id : xss(type.user_id)
     }
   }
 }
