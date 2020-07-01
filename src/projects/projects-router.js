@@ -3,15 +3,15 @@ const ProjectsService = require('./projects-service')
 
 const ProjectsRouter = express.Router()
 
-ProjectsRouter
-  .route('/')
-  .get((req, res, next) => {
-    ProjectsService.getAllTypes(req.app.get('db'))
-      .then(proj => {
-        res.json(proj.map(ProjectsService.serializeProjects))
-      })
-      .catch(next)
-  })
+// ProjectsRouter
+//   .route('/')
+//   .get((req, res, next) => {
+//     ProjectsService.getAllTypes(req.app.get('db'))
+//       .then(proj => {
+//         res.json(proj.map(ProjectsService.serializeProjects))
+//       })
+//       .catch(next)
+//   })
 
 ProjectsRouter
   .route('/:detail_id')
