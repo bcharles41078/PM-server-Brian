@@ -26,6 +26,13 @@ VALUES
 INSERT INTO project_details (project_title, project_description, due_date, list_id, user_id)
 VALUES
     ('Call goal', 'Make 400 calls a day everyday this week', '06/30/2020', 1, 1),
-    ('Spring Cleaning', 'Clean oven and refrigerator', '6/25/2020', 2, 3);
-
+    ('Spring Cleaning', 'Clean oven and refrigerator', '6/25/2020', 2, 3),
+    ('project 3', 'do it right', '07/15/2020', 1, 1),
+    ('project 4', 'do it right', '07/15/2020', 1, 1),
+    ('project 5', 'do it right', '07/15/2020', 1, 1),
+    ('project 6', 'do it right', '07/15/2020', 1, 1),
+    ('project 13', 'do it right', '07/15/2020', 2, 3),
+    ('project 14', 'do it right', '07/15/2020', 2, 3),
+    ('project 15', 'do it right', '07/15/2020', 2, 3),
+    ('project 16', 'do it right', '07/15/2020', 2, 3),
 COMMIT;
