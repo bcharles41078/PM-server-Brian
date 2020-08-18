@@ -15,9 +15,14 @@ typesRouter
       })
       .catch(next)
   })
-  .post(jsonBodyParser, (req, res, next) => {
-    const { title, user_id } = req.body
-    const newType = { title, user_id }
+
+  typesRouter
+    .route('/')
+   .post(jsonBodyParser, (req, res, next) => {
+     console.log(req.body, req.user)
+    const { title } = req.body
+    const newType = { title }
+    console.log (newType)
 
     for (const [key, value] of Object.entries(newType))
       if (value == null)
@@ -32,8 +37,8 @@ typesRouter
       .then(newType => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `/${type.list_id}`))
-          .json(TypesService.serializeTypes(type))
+          .location(path.posix.join(req.originalUrl, `/${newType.list_id}`))
+          .json(typesService.serializeTypes(newType))
       })
       .catch(next)
   })

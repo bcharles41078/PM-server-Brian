@@ -7,38 +7,45 @@ const typesService = {
       .select('*')
       .where('user_id', user_id)
   },
-  getById(db, id) {
-    return db
-      .from('project_lists AS type')
-      .select(
-        'type.list_id',
-        'type.title',
-        'type.date_created',
-        'type.user_id',
-        db.raw(
-          `json_strip_nulls(
-            row_to_json(
-              (SELECT tmp FROM (
-                SELECT
-                  usr.id,
-                  usr.user_name,
-                  usr.full_name,
-                  usr.nickname,
-                  usr.date_created,
-                  usr.date_modified
-              ) tmp)
-            )
-          ) AS "user"`
-        )
-      )
-      .leftJoin(
-        'project_users AS usr',
-        'type.user_id',
-        'usr.id',
-      )
-      .where('type.id', id)
-      .first()
-  },
+
+  // getById(db, id) {
+  //   return typesService.getAllTypes(db)
+  //     .where('list.id', id)
+  //     .first()
+  // },
+
+  // getById(db, id) {
+  //   return db
+  //     .from('project_lists AS type')
+  //     .select(
+  //       'type.list_id',
+  //       'type.title',
+  //       'type.date_created',
+  //       'type.user_id',
+  //       db.raw(
+  //         `json_strip_nulls(
+  //           row_to_json(
+  //             (SELECT tmp FROM (
+  //               SELECT
+  //                 usr.id,
+  //                 usr.user_name,
+  //                 usr.full_name,
+  //                 usr.nickname,
+  //                 usr.date_created,
+  //                 usr.date_modified
+  //             ) tmp)
+  //           )
+  //         ) AS "user"`
+  //       )
+  //     )
+  //     .leftJoin(
+  //       'project_users AS usr',
+  //       'type.user_id',
+  //       'usr.id',
+  //     )
+  //     .where('type.id', id)
+  //     .first()
+  // },
 
   insertType(db, newType) {
     return db
@@ -46,9 +53,9 @@ const typesService = {
       .into('project_lists')
       .returning('*')
       .then(([type]) => type)
-      .then(type =>
-        TypesService.getById(db, type.list_id)
-      )
+      // .then(type =>
+      //   typesService.getById(db, type.list_id)
+      // )
   },
 
   serializeTypes(type) {

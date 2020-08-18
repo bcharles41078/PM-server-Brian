@@ -1,11 +1,64 @@
 const express = require('express')
 const AuthService = require('./auth-service')
-
+const UsersService = require('../users/users-service')
 const authRouter = express.Router()
 const jsonBodyParser = express.json()
 
 authRouter
-  .post('/auth/login', jsonBodyParser, (req, res, next) => {
+  .post('/register', jsonBodyParser, (req, res, next) => {
+    const { user_name, full_name, nickname, password } = req.body
+    const regUser = { user_name, full_name, nickname, password }
+
+    for (const [key, value] of Object.entries(regUser)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: `Missing '${key}' in request body`
+        })
+      }
+    }
+
+    //see if account is already there
+    AuthService.getUserWithUserName(
+      req.app.get('db'),
+      regUser.user_name
+    )
+      .then(dbUser => {
+        //console.log(dbUser)
+        if (dbUser) {
+          return res.status(400).json({
+            error: 'User name already exisits',
+          })
+        }
+      })
+      .then(dbUser => {
+        //hash password
+        return AuthService.hashPasswords(
+          regUser.password
+        )
+      })
+      .then(hashedPw => {
+        //using that create the account
+        return UsersService.insertUser(
+          req.app.get('db'),
+          {
+            full_name: regUser.full_name,
+            nickname: regUser.nickname,
+            user_name: regUser.user_name,
+            password: hashedPw,
+          }
+        )
+      })
+      
+      .catch(next)
+
+
+    //sign in and send back jwt token
+    // createJwt(
+
+    // )
+
+  })
+  .post('/login', jsonBodyParser, (req, res, next) => {
     const { user_name, password } = req.body
     const loginUser = { user_name, password }
 
@@ -30,6 +83,7 @@ authRouter
 
         return AuthService.comparePasswords(loginUser.password, dbUser.password)
           .then(compareMatch => {
+            console.log(compareMatch)
             if (!compareMatch) {
               return res.status(400).json({
                 error: 'Incorrect user_name or password',
