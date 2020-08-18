@@ -26,16 +26,16 @@ ProjectsRouter
 
 
 ProjectsRouter
-  .route('/:detail_id')
-  .all(checkProjectExists)
-  .get((req, res) => {
-    ProjectsService.getById(
+  .route('/')
+  .delete(requireAuth, jsonBodyParser,(req, res) => {
+    console.log(req.body)
+    ProjectsService.deleteProjectById(
       req.app.get('db'),
-      req.params.detail_id
+      req.body.detail_id
     ).then(result => {
-      res.json(ProjectsService.serializeProjects(result))
+      res.status('204').send()
     })
-
+    .catch(error => {console.log(error)})
   })
 
 ProjectsRouter

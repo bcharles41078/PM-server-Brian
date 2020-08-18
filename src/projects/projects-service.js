@@ -8,20 +8,14 @@ const ProjectsService = {
       .where('user_id', user_id)
   },
 
-  getById(db, id) {
-    return ProjectsService.getAllTypes(db)
-      .where('detail_id', id)
-      .first()
+  deleteProjectById(db, detail_id){
+    return db
+      .from('project_details')
+      .where('detail_id', detail_id)
+      .del();
   },
 
-  getProjectsForTypes(db, type_id, user_id) {
-      return db
-        .from('project_details')
-        .select('*')
-        .where('list_id', type_id)
-        .where('user_id', user_id)
-    
-  },
+ 
 
   insertProject(db, newProject) {
     return db
@@ -29,9 +23,6 @@ const ProjectsService = {
       .into('project_details')
       .returning('*')
       .then(([project]) => project)
-      // .then(type =>
-      //   typesService.getById(db, type.list_id)
-      // )
   },
 
   serializeProjects(proj) {
