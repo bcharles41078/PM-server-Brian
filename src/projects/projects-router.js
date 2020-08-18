@@ -13,14 +13,10 @@ ProjectsRouter
     try {
       const projects = await ProjectsService.getAllProjects(
         req.app.get('db'),
-        req.query.user_id
+        req.user.id
       );
-
-      let index = Math.floor(Math.random() * projects.length);
-      index === projects.length ? index = index - 1 : null;
-
       res.status(200).json(
-        ProjectsService.serializeProjects(projects[index])
+       projects.map(project => ProjectsService.serializeProjects(project))
       );
 
     } catch (error) {
@@ -44,12 +40,12 @@ ProjectsRouter
 
 ProjectsRouter
   .route('/')
-  .post(jsonBodyParser, (req, res, next) => {
+  .post(requireAuth, jsonBodyParser, async (req, res, next) => {
     console.log(req.body, req.user)
-    const { project_title, project_description, due_date, list_id, user_id } = req.body
-    const newProject = { project_title, project_description, due_date, list_id, user_id }
+    const { project_title, project_description, due_date, list_id} = req.body
+    const newProject = { project_title, project_description, due_date, list_id, user_id:req.user.id }
     console.log(newProject)
-    ProjectsService.insertProject(req.app.get('db'), newProject)
+    await ProjectsService.insertProject(req.app.get('db'), newProject)
 
     for (const [key, value] of Object.entries(newProject)) {
       if (value == null)
