@@ -16,7 +16,7 @@ ProjectsRouter
         req.user.id
       );
       res.status(200).json(
-       projects.map(project => ProjectsService.serializeProjects(project))
+        projects.map(project => ProjectsService.serializeProjects(project))
       );
 
     } catch (error) {
@@ -27,7 +27,7 @@ ProjectsRouter
 
 ProjectsRouter
   .route('/')
-  .delete(requireAuth, jsonBodyParser,(req, res) => {
+  .delete(requireAuth, jsonBodyParser, (req, res) => {
     console.log(req.body)
     ProjectsService.deleteProjectById(
       req.app.get('db'),
@@ -35,15 +35,35 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-    .catch(error => {console.log(error)})
+      .catch(error => { console.log(error) })
+  })
+
+ProjectsRouter
+  .route('/')
+  .patch(requireAuth, jsonBodyParser, (req, res) => {
+    console.log(req.body)
+    updatedProject = {
+      project_title: req.body.project_title,
+      project_description: req.body.project_description,
+      due_date: req.body.due_date
+    }
+    ProjectsService.updateProject(
+      req.app.get('db'),
+      req.body.detail_id,
+      updatedProject
+       
+    ).then(result => {
+      res.status('204').send()
+    })
+      .catch(error => { console.log(error) })
   })
 
 ProjectsRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {
     console.log(req.body, req.user)
-    const { project_title, project_description, due_date} = req.body
-    const newProject = { project_title, project_description, due_date, user_id:req.user.id }
+    const { project_title, project_description, due_date } = req.body
+    const newProject = { project_title, project_description, due_date, user_id: req.user.id }
     console.log(newProject)
     await ProjectsService.insertProject(req.app.get('db'), newProject)
 
