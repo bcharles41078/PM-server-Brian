@@ -5,7 +5,7 @@ const authRouter = express.Router()
 const jsonBodyParser = express.json()
 
 authRouter
-  .post('/register', jsonBodyParser, (req, res, next) => {
+  .post('/user', jsonBodyParser, (req, res, next) => {
     const { user_name, full_name, nickname, password } = req.body
     const regUser = { user_name, full_name, nickname, password }
 

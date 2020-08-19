@@ -2,7 +2,6 @@ BEGIN;
 
 TRUNCATE
     project_details,
-    project_lists,
     project_users
 RESTART IDENTITY CASCADE;
 
@@ -14,25 +13,16 @@ VALUES
     ('bcharles3', 'Brian Charles 3', 'Shaggy3', '$2a$16$iVhL7G0enaOd7vESDaf6J.nV0WaErswWwA0jC.YIWF1MzYkRit/5W'),
     ('bcharles4', 'Brian Charles 4', 'Shaggy4', '2a$16$oTLxa/0xr0Dc4QF/iEZ7quLS9MyJFJ4CB4QWtXpf8JnY7Z37PSDhq');
 
-INSERT INTO project_lists (title, user_id)
+INSERT INTO project_details (project_title, project_description, due_date, user_id)
 VALUES
-    ('Work', 1),
-    ('Home', 1),
-    ('School', 1),
-    ('Work', 2),
-    ('Home', 2),
-    ('Yard', 1);
-
-INSERT INTO project_details (project_title, project_description, due_date, list_id, user_id)
-VALUES
-    ('Call goal', 'Make 400 calls a day everyday this week', '06/30/2020', 1, 1),
-    ('Spring Cleaning', 'Clean oven and refrigerator', '6/25/2020', 2, 3),
-    ('project 3', 'do it right', '07/15/2020', 1, 1),
-    ('project 4', 'do it right', '07/15/2020', 1, 1),
-    ('project 5', 'do it right', '07/15/2020', 1, 1),
-    ('project 6', 'do it right', '07/15/2020', 1, 1),
-    ('project 13', 'do it right', '07/15/2020', 2, 3),
-    ('project 14', 'do it right', '07/15/2020', 2, 3),
-    ('project 15', 'do it right', '07/15/2020', 2, 3),
-    ('project 16', 'do it right', '07/15/2020', 2, 3);
+    ('Call goal', 'Make 400 calls a day everyday this week', '06/30/2020', 1),
+    ('Spring Cleaning', 'Clean oven and refrigerator', '6/25/2020',  3),
+    ('project 3', 'do it right', '07/15/2020',  1),
+    ('project 4', 'do it right', '07/15/2020',  1),
+    ('project 5', 'do it right', '07/15/2020',  1),
+    ('project 6', 'do it right', '07/15/2020',  1),
+    ('project 13', 'do it right', '07/15/2020', 3),
+    ('project 14', 'do it right', '07/15/2020', 3),
+    ('project 15', 'do it right', '07/15/2020', 3),
+    ('project 16', 'do it right', '07/15/2020', 3);
 COMMIT;

@@ -8,7 +8,3 @@ CREATE TABLE project_users (
   date_modified TIMESTAMPTZ
 );
 
-ALTER TABLE project_lists
-  ADD COLUMN
-    user_id INTEGER REFERENCES project_users(id)
-    ON DELETE SET NULL;

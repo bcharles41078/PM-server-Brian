@@ -42,8 +42,8 @@ ProjectsRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {
     console.log(req.body, req.user)
-    const { project_title, project_description, due_date, list_id} = req.body
-    const newProject = { project_title, project_description, due_date, list_id, user_id:req.user.id }
+    const { project_title, project_description, due_date} = req.body
+    const newProject = { project_title, project_description, due_date, user_id:req.user.id }
     console.log(newProject)
     await ProjectsService.insertProject(req.app.get('db'), newProject)
 
