@@ -16,7 +16,6 @@ const ProjectsService = {
   },
 
   updateProject(db, detail_id, updatedProject){
-    console.log(`detail id: ${detail_id}, project: ${updatedProject.project_title}`)
     return db 
       .from('project_details')
       .update({

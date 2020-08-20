@@ -34,7 +34,7 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-      .catch(error => { console.log(error) })
+      .catch(error => { alert(error.error) })
   })
 
 ProjectsRouter
@@ -53,7 +53,7 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-      .catch(error => { console.log(error) })
+      .catch(error => { alert(error.error) })
   })
 
 ProjectsRouter
@@ -69,6 +69,7 @@ ProjectsRouter
           error: `Missing '${key}' in request body`
         })
     }
+    res.status(201).send()
   })
 /* async/await syntax for promises */
 async function checkProjectExists(req, res, next) {
