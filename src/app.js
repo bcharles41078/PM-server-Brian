@@ -4,7 +4,6 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const projectsRouter = require('./projects/projects-router')
-const typesRouter = require('./types/types-router')
 const authRouter = require('./auth/auth-router')
 
 const app = express()
@@ -15,7 +14,6 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
 app.use(cors())
 app.use(helmet())
 
-app.use('/api/types', typesRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/auth', authRouter)
 
