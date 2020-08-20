@@ -15,7 +15,18 @@ const ProjectsService = {
       .del();
   },
 
- 
+  updateProject(db, detail_id, updatedProject){
+    console.log(`detail id: ${detail_id}, project: ${updatedProject.project_title}`)
+    return db 
+      .from('project_details')
+      .update({
+        detail_id: detail_id,
+        project_title: updatedProject.project_title,
+        project_description: updatedProject.project_description,
+        due_date: updatedProject.due_date
+      })
+      .where('detail_id', detail_id)
+  },
 
   insertProject(db, newProject) {
     return db

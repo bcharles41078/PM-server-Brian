@@ -10,7 +10,6 @@ const AuthService = {
       .first()
   },
   comparePasswords(password, hash) {
-    console.log(password, hash)
     return bcrypt.compare(password, hash)
   },
   hashPasswords(password) {

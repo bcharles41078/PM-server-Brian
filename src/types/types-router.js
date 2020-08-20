@@ -19,10 +19,8 @@ typesRouter
   typesRouter
     .route('/')
    .post(jsonBodyParser, (req, res, next) => {
-     console.log(req.body, req.user)
     const { title } = req.body
     const newType = { title }
-    console.log (newType)
 
     for (const [key, value] of Object.entries(newType))
       if (value == null)

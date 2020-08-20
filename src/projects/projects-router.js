@@ -28,7 +28,6 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .delete(requireAuth, jsonBodyParser, (req, res) => {
-    console.log(req.body)
     ProjectsService.deleteProjectById(
       req.app.get('db'),
       req.body.detail_id
@@ -41,7 +40,6 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .patch(requireAuth, jsonBodyParser, (req, res) => {
-    console.log(req.body)
     updatedProject = {
       project_title: req.body.project_title,
       project_description: req.body.project_description,
@@ -61,10 +59,8 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {
-    console.log(req.body, req.user)
     const { project_title, project_description, due_date } = req.body
     const newProject = { project_title, project_description, due_date, user_id: req.user.id }
-    console.log(newProject)
     await ProjectsService.insertProject(req.app.get('db'), newProject)
 
     for (const [key, value] of Object.entries(newProject)) {
