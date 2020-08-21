@@ -47,7 +47,7 @@ authRouter
           }
         )
       })
-      
+      res.status(201).send()
       .catch(next)
 
 
