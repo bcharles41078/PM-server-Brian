@@ -47,7 +47,9 @@ authRouter
           }
         )
       })
-      res.status(201).send()
+      .then(data => {
+        res.status(201).send()
+      })
       .catch(next)
 
 
