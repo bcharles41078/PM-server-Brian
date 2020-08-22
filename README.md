@@ -18,3 +18,10 @@
 -   JS
 -   CSS
 -   Express
+
+## Summary
+This app is there for you to keep track of projects. A place you can log all you projects in one place assign due dates
+you can edit your projects as you see fit and only you can see your projects.
+
+
+![project-manager-screenshot](https://user-images.githubusercontent.com/62114382/90963638-17d47300-e47f-11ea-99e6-cfdc9eca443f.PNG)
