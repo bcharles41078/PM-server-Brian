@@ -53,7 +53,7 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-      .catch(error => { alert(error.error) })
+      .catch(next)
   })
 
 ProjectsRouter
