@@ -6,7 +6,8 @@ const ProjectsService = {
       .from('project_details')
       .select('*')
       .where('user_id', user_id)
-  },
+      .orderBy(due_date, 'asc')
+    },
 
   deleteProjectById(db, detail_id){
     return db
