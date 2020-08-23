@@ -6,7 +6,6 @@ const ProjectsService = {
       .from('project_details')
       .select('*')
       .where('user_id', user_id)
-      
     },
 
   deleteProjectById(db, detail_id){
