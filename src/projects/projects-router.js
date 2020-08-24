@@ -56,23 +56,6 @@ ProjectsRouter
 
   })
 
-// ProjectsRouter
-//   .route('/')
-//   .patch(requireAuth, jsonBodyParser, (req, res) => {
-//     updatedProject = {
-//       completed: req.body.completed
-//     }
-//     ProjectsService.completeProject(
-//       req.app.get('db'),
-//       req.body.detail_id,
-//       updatedProject
-
-//     ).then(result => {
-//       res.status('204').send()
-//     })
-
-//   })
-
 ProjectsRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {

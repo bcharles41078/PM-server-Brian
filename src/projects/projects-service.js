@@ -6,22 +6,13 @@ const ProjectsService = {
       .from('project_details')
       .select('project_title', 
         'project_description', 
-        'due_date', 'completed'
+        'due_date'
       )
-      .where({'user_id': user_id, 'completed': 'false'})
+      .where('user_id', user_id)
       .orderBy('due_date');
     },
 
-  getComletedProjects(db, user_id) {
-    return db 
-    .from('project_details')
-    .select('project_title', 
-      'project_description', 
-      'due_date', 'completed'
-    )
-    .where({'user_id': user_id, 'completed': 'true'}) 
-    .orderBy('due_date');
-  },
+ 
 
   deleteProjectById(db, detail_id){
     return db
@@ -42,16 +33,6 @@ const ProjectsService = {
       .where('detail_id', detail_id)
   },
 
-  completeProject(db, detail_id){
-    return db 
-      .from('project_details')
-      .update({
-        detail_id: detail_id,
-        completed: true
-      })
-      .where('detail_id', detail_id)
-  },
-
   insertProject(db, newProject) {
     return db
       .insert(newProject)
@@ -67,7 +48,6 @@ const ProjectsService = {
       title: xss(proj.project_title),
       project_description: xss(proj.project_description),
       due_date: xss(proj.due_date),
-      completed: proj.completed,
       date_created: new Date(proj.date_created),
     }
   },
