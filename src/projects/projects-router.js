@@ -57,7 +57,7 @@ ProjectsRouter
   })
 
 ProjectsRouter
-  .route('/completed/')
+  .route('/')
   .patch(requireAuth, jsonBodyParser, (req, res) => {
     updatedProject = {
       completed: req.body.completed
