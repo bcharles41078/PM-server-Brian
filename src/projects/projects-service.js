@@ -42,12 +42,12 @@ const ProjectsService = {
       .where('detail_id', detail_id)
   },
 
-  completeProject(db, detail_id, updatedProject){
+  completeProject(db, detail_id){
     return db 
       .from('project_details')
       .update({
         detail_id: detail_id,
-        completed: updatedProject.completed
+        completed: true
       })
       .where('detail_id', detail_id)
   },
