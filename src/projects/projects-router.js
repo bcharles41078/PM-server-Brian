@@ -16,7 +16,6 @@ ProjectsRouter
         req.user.id
       );
       res.status(200).json(
-        projects.sort((a, b) => new Date(a.date) - new Date(b.date)),
         projects.map(project => ProjectsService.serializeProjects(project))
       );
 
