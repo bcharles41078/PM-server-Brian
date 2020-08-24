@@ -4,8 +4,9 @@ const ProjectsService = {
   getAllProjects(db, user_id) {
     return db
       .from('project_details')
-      .select('*')
+      .select(title, project_description, due_date)
       .where('user_id', user_id)
+      .order(due_date)
     },
 
   deleteProjectById(db, detail_id){
