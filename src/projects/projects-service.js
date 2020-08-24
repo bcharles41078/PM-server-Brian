@@ -8,9 +8,20 @@ const ProjectsService = {
         'project_description', 
         'due_date'
       )
-      .where('user_id', user_id)
+      .where({'user_id': user_id, 'completed': 'false'})
       .orderBy('due_date');
     },
+
+  getComletedProjects(db, user_id) {
+    return db 
+    .from('project_details')
+    .select('project_title', 
+      'project_description', 
+      'due_date', 'completed'
+    )
+    .where({'user_id': user_id, 'completed': 'true'}) 
+    .orderBy('due_date');
+  },
 
   deleteProjectById(db, detail_id){
     return db
@@ -27,6 +38,16 @@ const ProjectsService = {
         project_title: updatedProject.project_title,
         project_description: updatedProject.project_description,
         due_date: updatedProject.due_date
+      })
+      .where('detail_id', detail_id)
+  },
+
+  completeProject(db, detail_id, updatedProject){
+    return db 
+      .from('project_details')
+      .update({
+        detail_id: detail_id,
+        completed: updatedProject.completed
       })
       .where('detail_id', detail_id)
   },

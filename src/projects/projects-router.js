@@ -49,11 +49,28 @@ ProjectsRouter
       req.app.get('db'),
       req.body.detail_id,
       updatedProject
-       
+
     ).then(result => {
       res.status('204').send()
     })
-      
+
+  })
+
+ProjectsRouter
+  .route('/')
+  .patch(requireAuth, jsonBodyParser, (req, res) => {
+    updatedProject = {
+      completed: req.body.completed
+    }
+    ProjectsService.updateProject(
+      req.app.get('db'),
+      req.body.detail_id,
+      updatedProject
+
+    ).then(result => {
+      res.status('204').send()
+    })
+
   })
 
 ProjectsRouter
