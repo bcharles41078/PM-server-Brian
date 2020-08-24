@@ -6,7 +6,7 @@ const ProjectsService = {
       .from('project_details')
       .select('project_title', 
         'project_description', 
-        'due_date'
+        'due_date', 'completed'
       )
       .where({'user_id': user_id, 'completed': 'false'})
       .orderBy('due_date');

@@ -62,7 +62,7 @@ ProjectsRouter
     updatedProject = {
       completed: req.body.completed
     }
-    ProjectsService.updateProject(
+    ProjectsService.completeProject(
       req.app.get('db'),
       req.body.detail_id,
       updatedProject
