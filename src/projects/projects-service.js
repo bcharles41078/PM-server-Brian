@@ -4,7 +4,7 @@ const ProjectsService = {
   getAllProjects(db, user_id) {
     return db
       .from('project_details')
-      .select('title', 
+      .select('project_title', 
         'project_description', 
         'due_date'
       )
