@@ -67,6 +67,7 @@ const ProjectsService = {
       title: xss(proj.project_title),
       project_description: xss(proj.project_description),
       due_date: xss(proj.due_date),
+      completed: xss(proj.completed),
       date_created: new Date(proj.date_created),
     }
   },
