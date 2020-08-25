@@ -5,7 +5,6 @@ const ProjectsService = {
     return db
       .from('project_details')
       .select('*','due_date')
-      
       .where('user_id', user_id)
       .orderBy('due_date');
     },
