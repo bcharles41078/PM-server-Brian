@@ -4,11 +4,8 @@ const ProjectsService = {
   getAllProjects(db, user_id) {
     return db
       .from('project_details')
-      .select('project.detail_id',
-        'project_title', 
-        'project_description', 
-        'due_date'
-      )
+      .select('*','due_date')
+      
       .where('user_id', user_id)
       .orderBy('due_date');
     },
