@@ -49,11 +49,11 @@ ProjectsRouter
       req.app.get('db'),
       req.body.detail_id,
       updatedProject
-       
+
     ).then(result => {
       res.status('204').send()
     })
-      
+
   })
 
 ProjectsRouter
