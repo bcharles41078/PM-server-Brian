@@ -19,8 +19,8 @@ app.use(helmet())
 
 app.use('/api/projects', projectsRouter)
 app.use('/api/auth', authRouter)
-app.use('./api/steps', stepsRouter)
-app.use('./api/notes', notesRouter)
+app.use('/api/steps', stepsRouter)
+app.use('/api/notes', notesRouter)
 
 
 app.use(function errorHandler(error, req, res, next) {
