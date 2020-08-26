@@ -22,7 +22,7 @@ ProjectsRouter
     } catch (error) {
       next(error);
     }
-  }),
+  })
 
 
 ProjectsRouter
@@ -34,7 +34,8 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-  },
+    //.catch(next)
+  })
 
 ProjectsRouter
   .route('/')
@@ -53,7 +54,7 @@ ProjectsRouter
       res.status('204').send()
     })
 
-  }),
+  })
 
 ProjectsRouter
   .route('/')
@@ -69,7 +70,7 @@ ProjectsRouter
         })
     }
     res.status(201).send()
-  }),
+  })
 /* async/await syntax for promises */
 async function checkProjectExists(req, res, next) {
   try {
@@ -88,6 +89,6 @@ async function checkProjectExists(req, res, next) {
   } catch (error) {
     next(error)
   }
-})
+}
 
 module.exports = ProjectsRouter
