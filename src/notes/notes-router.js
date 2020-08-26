@@ -8,21 +8,21 @@ const NotesRouter = express.Router()
 
 
 NotesRouter
-  .route('/')
-  .get(requireAuth, async (req, res, next) => {
-    try {
-      const notes = await NotesService.getAllNotes(
-        req.app.get('db'),
-        req.user.id
-      );
-      res.status(200).json(
-        projects.map(note => NotesService.serializeNotes(note))
-      );
+  // .route('/')
+  // .get(requireAuth, async (req, res, next) => {
+  //   try {
+  //     const notes = await NotesService.getAllNotes(
+  //       req.app.get('db'),
+  //       req.user.id
+  //     );
+  //     res.status(200).json(
+  //       projects.map(note => NotesService.serializeNotes(note))
+  //     );
 
-    } catch (error) {
-      next(error);
-    }
-  })
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // })
 
 
 ProjectsRouter
