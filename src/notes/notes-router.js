@@ -1,22 +1,22 @@
 const express = require('express')
-const ProjectsService = require('./projects-service')
+const NotesService = require('./notes-service')
 const { requireAuth } = require('../middleware/jwt-auth');
 const { userFromAuth } = require('../middleware/user_from_auth');
 
 const jsonBodyParser = express.json()
-const ProjectsRouter = express.Router()
+const NotesRouter = express.Router()
 
 
-ProjectsRouter
+NotesRouter
   .route('/')
   .get(requireAuth, async (req, res, next) => {
     try {
-      const projects = await ProjectsService.getAllProjects(
+      const notes = await NotesService.getAllNotes(
         req.app.get('db'),
         req.user.id
       );
       res.status(200).json(
-        projects.map(project => ProjectsService.serializeProjects(project))
+        projects.map(note => NotesService.serializeNotes(note))
       );
 
     } catch (error) {
@@ -28,9 +28,9 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .delete(requireAuth, jsonBodyParser, (req, res) => {
-    ProjectsService.deleteProjectById(
+    NotesService.deleteNoteById(
       req.app.get('db'),
-      req.body.detail_id
+      req.body.note_id
     ).then(result => {
       res.status('204').send()
     })
@@ -39,15 +39,13 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .patch(requireAuth, jsonBodyParser, (req, res) => {
-    updatedProject = {
-      project_title: req.body.project_title,
-      project_description: req.body.project_description,
-      due_date: req.body.due_date
+    updatedNote = {
+      note: req.body.note
     }
-    ProjectsService.updateProject(
+    NotesService.updateNote(
       req.app.get('db'),
-      req.body.detail_id,
-      updatedProject
+      req.body.note_id,
+      updatedNote
 
     ).then(result => {
       res.status('204').send()
@@ -58,11 +56,11 @@ ProjectsRouter
 ProjectsRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {
-    const { project_title, project_description, due_date } = req.body
-    const newProject = { project_title, project_description, due_date, user_id: req.user.id }
-    await ProjectsService.insertProject(req.app.get('db'), newProject)
+    const { note } = req.body
+    const newNote = { note }
+    await NotesService.insertNote(req.app.get('db'), newNote)
 
-    for (const [key, value] of Object.entries(newProject)) {
+    for (const [key, value] of Object.entries(newNote)) {
       if (value == null)
         return res.status(400).json({
           error: `Missing '${key}' in request body`
@@ -73,7 +71,7 @@ ProjectsRouter
 /* async/await syntax for promises */
 async function checkProjectExists(req, res, next) {
   try {
-    const project = await ProjectsService.getById(
+    const project = await NotesService.getById(
       req.app.get('db'),
       req.params.detail_id
     )
