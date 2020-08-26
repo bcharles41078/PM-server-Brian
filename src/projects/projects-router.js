@@ -22,7 +22,7 @@ ProjectsRouter
     } catch (error) {
       next(error);
     }
-  })
+  }),
 
 
 ProjectsRouter
