@@ -8,24 +8,24 @@ const NotesRouter = express.Router()
 
 
 NotesRouter
-  // .route('/')
-  // .get(requireAuth, async (req, res, next) => {
-  //   try {
-  //     const notes = await NotesService.getAllNotes(
-  //       req.app.get('db'),
-  //       req.user.id
-  //     );
-  //     res.status(200).json(
-  //       projects.map(note => NotesService.serializeNotes(note))
-  //     );
+  .route('/')
+  .get(requireAuth, async (req, res, next) => {
+    try {
+      const notes = await NotesService.getAllNotes(
+        req.app.get('db'),
+        req.user.id
+      );
+      res.status(200).json(
+        projects.map(note => NotesService.serializeNotes(note))
+      );
 
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // })
+    } catch (error) {
+      next(error);
+    }
+  })
 
 
-ProjectsRouter
+NotesRouter
   .route('/')
   .delete(requireAuth, jsonBodyParser, (req, res) => {
     NotesService.deleteNoteById(
@@ -34,9 +34,9 @@ ProjectsRouter
     ).then(result => {
       res.status('204').send()
     })
-  },
+  }),
 
-ProjectsRouter
+NotesRouter
   .route('/')
   .patch(requireAuth, jsonBodyParser, (req, res) => {
     updatedNote = {
@@ -53,7 +53,7 @@ ProjectsRouter
 
   }),
 
-ProjectsRouter
+NotesRouter
   .route('/')
   .post(requireAuth, jsonBodyParser, async (req, res, next) => {
     const { note } = req.body
@@ -67,25 +67,7 @@ ProjectsRouter
         })
     }
     res.status(201).send()
-  }),
-/* async/await syntax for promises */
-async function checkProjectExists(req, res, next) {
-  try {
-    const project = await NotesService.getById(
-      req.app.get('db'),
-      req.params.detail_id
-    )
+  });
 
-    if (!project)
-      return res.status(404).json({
-        error: `Project doesn't exist`
-      })
 
-    res.project = project
-    next()
-  } catch (error) {
-    next(error)
-  }
-})
-
-module.exports = ProjectsRouter
+module.exports = NotesRouter
