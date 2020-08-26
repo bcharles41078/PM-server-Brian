@@ -56,20 +56,51 @@ function makeProjectsArray() {
   ];
 }
 
+function seedProjects(db, projects) {
+  return db.into('quotes').insert(projects)
+    .then(() =>
+      db.raw(
+        `SELECT setval('projects_project_id_seq',?)`,
+        [projects[projects.length - 1].project_id]
+      )
+    );
+}
 
+function seedUsers(db, users) {
+  return db.into('users').insert(users)
+    .then(() =>
+      db.raw(
+        `SELECT setval('users_user_id_seq',?)`,
+        [users[users.length - 1].user_id]
+      )
+    );
+}
+
+function makeKnexInstance() {
+  return knex({
+    client: 'pg',
+    connection: process.env.TEST_DATABASE_URL,
+  });
+}
+
+function cleanTables(db) {
+  return db.raw(
+    `TRUNCATE
+      users,
+      quotes,
+      blessings,
+      curses
+      RESTART IDENTITY CASCADE`
+  );
+}
 
 module.exports = {
   makeKnexInstance,
   makeUsersArray,
-  
-  makeFixtures,
-  
-  getUserById,
-  
-
+  makeProjectsArray,
+  seedProjects,
   cleanTables,
   seedUsers,
   
-  makeAuthHeader,
   
 };
