@@ -38,7 +38,7 @@ const NotesService = {
   serializeProjects(note) {
     const { author } = note
     return {
-      note_id: note.detail_id,
+      detail_id: note.detail_id,
       note: xss(note.project_title)
     }
   },
