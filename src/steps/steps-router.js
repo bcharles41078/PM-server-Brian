@@ -22,3 +22,7 @@ StepsRouter
             next(error);
         }
     });
+
+    
+
+module.exports = StepsRouter
